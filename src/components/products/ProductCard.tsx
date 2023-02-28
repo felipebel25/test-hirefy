@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
-import { Box, Card, CardActionArea, CardMedia, Grid, Typography } from "@mui/material"
+import { Box, Card, CardActionArea, CardMedia, Chip, Grid, Link, Typography } from "@mui/material"
 import { IProduct } from "@/interfaces"
-import NextLink from 'next/link'
+import NextLink from "next/link";
 
 interface Props {
     product: IProduct;
@@ -9,11 +9,14 @@ interface Props {
 
 export const ProductCard = ({ product }: Props) => {
     const [isHovered, setIsHovered] = useState(false);
+    const [isImageLoaded, setisImageLoaded] = useState(false)
+
     const productImage = useMemo(() => {
         return isHovered
-            ? `products/${product.images[1]}`
-            : `products/${product.images[0]}`
-    }, [isHovered])
+            ? `/products/${product.images[1]}`
+            : `/products/${product.images[0]}`;
+
+    }, [isHovered, product.images])
 
     return (
         <Grid
@@ -24,19 +27,29 @@ export const ProductCard = ({ product }: Props) => {
             onMouseLeave={() => setIsHovered(false)}
 
         >
-            <NextLink href={'/product/slug'} passHref prefetch={false}>
-                <Card>
-                    <CardActionArea>
-                        <CardMedia
-                            className='fadeIn'
-                            component={'img'}
-                            image={productImage}
-                            alt={product.title}
-                        />
-                    </CardActionArea>
-                </Card>
+            <NextLink href={`/product/${product.slug}`} passHref prefetch={false}>
+                <Link>
+                    <Card>
+                        <CardActionArea>
+                            {product.inStock === 0 && (
+                                <Chip
+                                    color="primary"
+                                    label='No hay disponible'
+                                    sx={{ position: "absolute", zIndex: 99, top: "10px", left: "10px" }}
+                                />
+                            )}
+                            <CardMedia
+                                component={'img'}
+                                className='fadeIn'
+                                image={productImage}
+                                alt={product.title}
+                                onLoad={() => setisImageLoaded(true)}
+                            />
+                        </CardActionArea>
+                    </Card>
+                </Link>
             </NextLink>
-            <Box sx={{ mt: 1 }} className='fadeIn'>
+            <Box sx={{ mt: 1, display: isImageLoaded ? 'block' : 'none' }} className='fadeIn'>
                 <Typography fontWeight={700}>{product.title}</Typography>
                 <Typography fontWeight={500}>{`$${product.price}`}</Typography>
 

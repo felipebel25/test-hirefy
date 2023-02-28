@@ -1,1 +1,2 @@
-export type { IProduct, ISizes, ITypes } from "./products";
+export type { ICartProduct } from "./cart";
+export type { IProduct, ISize, IType } from "./products";

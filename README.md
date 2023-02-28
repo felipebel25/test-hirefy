@@ -2,6 +2,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+for docker run
+sudo docker-compose up -d
+
 First, run the development server:
 
 ```bash
@@ -11,6 +14,15 @@ yarn dev
 # or
 pnpm dev
 ```
+
+configurar las variables de entorno
+mongodb url local:
+MONGO_URL=mongodb://localhost:27017/teslodb
+
+llenar base de datos
+
+
+http://localhost:3000/api/seed
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
