@@ -1,5 +1,5 @@
-import { ICartProduct } from '@/interfaces/cart';
 import { createContext } from 'react';
+import { ICartProduct } from '@/interfaces/cart';
 
 
 export interface CartContextProps {
@@ -8,7 +8,8 @@ export interface CartContextProps {
      subtotal: number;
      tax: number;
      total: number;
-     
+     isLoaded: boolean;
+
      //methods
      addProductToCart: (product: ICartProduct) => void;
      updateCartQuantity: (product: ICartProduct) => void;

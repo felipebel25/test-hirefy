@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { db, initialData } from 'database'
-import { Product } from 'models'
+import { Product , User } from 'models'
+import Palondromo from 'models/palindromo'
 
 type Data = {
     message: string
@@ -13,9 +14,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
 
     await db.connect()
+    
+    await User.deleteMany();
+    await User.insertMany(initialData.users);
 
     await Product.deleteMany();
     await Product.insertMany(initialData.products);
+
+    await Palondromo.deleteMany();
+    await Palondromo.insertMany(initialData.palondromo);
 
     await db.disconnect()
 

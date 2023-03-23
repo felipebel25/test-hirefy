@@ -7,11 +7,9 @@ import { ItemCounter } from "@/components/ui/ItemCounter"
 import { IProduct, ICartProduct, ISize } from "@/interfaces"
 import { Box, Button, Chip, Grid, Typography } from "@mui/material"
 import { getAllProductSlugs, getProductBySlug } from "database/dbProducts"
-import { initialData } from "database/products"
 import { CartContext } from "../../../context/cart/CartContext"
 import { useRouter } from "next/router"
 
-const product = initialData.products[0]
 
 interface Props {
   product: IProduct;

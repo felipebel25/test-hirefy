@@ -1,8 +1,9 @@
-import { FC, PropsWithChildren, useEffect, useReducer, useState } from 'react';
+import { FC, PropsWithChildren, useEffect, useReducer } from 'react';
 import Cookie from 'js-cookie'
 import { CartContext, cartReducer } from './index';
 import { ICartProduct } from '@/interfaces/cart';
 export interface CartState {
+    isLoaded: boolean,
     cart: ICartProduct[];
     numberOfItems: number;
     subtotal: number;
@@ -11,6 +12,7 @@ export interface CartState {
 
 }
 export const Cart_INITIAL_STATE: CartState = {
+    isLoaded: false,
     cart: [] as ICartProduct[],
     numberOfItems: 0,
     subtotal: 0,
@@ -49,7 +51,7 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
             total: subtotal + tax
         }
 
-        dispatch({type:'[Cart] - Update Order Summary' , payload: orderSummary})
+        dispatch({ type: '[Cart] - Update Order Summary', payload: orderSummary })
     }, [state.cart])
 
 
