@@ -93,13 +93,12 @@ export const Navbar = () => {
                 {/* screens shorts */}
                 <IconButton
                     sx={{ display: { xs: 'flex', md: "none" } }}
-
                     onClick={toggleSideMenu}
                 >
                     <SearchOutlined />
                 </IconButton>
 
-                <NextLink href='/cart/empty' passHref legacyBehavior>
+                <NextLink href='/cart' passHref legacyBehavior>
                     <Link>
                         <IconButton>
                             <Badge badgeContent={numberOfItems < 10 ? numberOfItems : '+9'} color="secondary">

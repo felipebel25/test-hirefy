@@ -1,14 +1,15 @@
-import { AuthLayout } from "@/components/layouts"
-import { ErrorOutline } from "@mui/icons-material";
-import { Box, Button, Chip, Grid, TextField, Typography } from "@mui/material"
-import { AuthContext } from "context";
 import Link from "next/link"
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { tesloApi } from "services";
 import { isEmail } from "utils";
 
+import { AuthLayout } from "@/components/layouts"
+import { ErrorOutline } from "@mui/icons-material";
+import { Box, Button, Chip, Grid, TextField, Typography } from "@mui/material"
+import { AuthContext } from "context";
+import { getSession, signIn } from "next-auth/react";
+import { GetServerSideProps } from "next";
 
 type FormData = {
     name: string;
@@ -27,27 +28,23 @@ const RegisterPage = () => {
     const { registerUser } = useContext(AuthContext)
 
     const onRegisterForm = async ({ email, name, password }: FormData) => {
+
+        // se registra
         const { hasError, message } = await registerUser(name, email, password)
 
         if (hasError) {
             setIsError({ isOpen: hasError, message: message || '' })
             return
         }
-        const destination = router.query.p?.toString() || '/'
-
+        // const destination = router.query.p?.toString() || '/'
         setIsError({
             isOpen: false,
             message: ''
         })
-        router.replace(destination)
-        // try {
-        //     const { data } = await tesloApi.post('/user/register', { name, email, password });
-        //     const { token, user } = data;
-        //     console.log(token, user);
-        //     setIsError(false)
-        // } catch (error) {
-        //     setIsError(true)
-        // }
+        // se logea el recien usuario registrado
+        await signIn('credentials', { email: email, password: password })
+
+
     }
     return (
         <AuthLayout title={"Ingresar"} >
@@ -136,4 +133,26 @@ const RegisterPage = () => {
     )
 }
 
-export default RegisterPage
+export default RegisterPage;
+
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time
+
+export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+
+    const session = await getSession({ req })
+
+    const { p = '/' } = query
+
+    if (session) return {
+        redirect: {
+            destination: p.toString(),
+            permanent: false
+        }
+    }
+    return {
+        props: {}
+    }
+}
+
+

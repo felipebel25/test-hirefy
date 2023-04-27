@@ -8,9 +8,9 @@ import { useRouter } from "next/router"
 const CartPage = () => {
     const { replace } = useRouter()
     const { cart, isLoaded, } = useContext(CartContext)
+    
     useEffect(() => {
         if (isLoaded && cart.length === 0) replace('/cart/empty');
-
     }, [isLoaded, cart, replace])
 
     if (!isLoaded) return <></>

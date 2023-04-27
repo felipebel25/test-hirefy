@@ -5,11 +5,14 @@ import { ItemCounter } from "../ui"
 import { ICartProduct } from "@/interfaces"
 
 import { CartContext } from "context"
+import { IOrderItem } from "@/interfaces/order"
 
 interface Props {
     isEdit?: boolean;
+    products?: IOrderItem[];
 }
-export const CartList = ({ isEdit = false }: Props) => {
+
+export const CartList = ({ isEdit = false, products }: Props) => {
     const { cart, updateCartQuantity, removeCartProduct } = useContext(CartContext);
 
     const onNewCartQuantityValue = (product: ICartProduct, newQuantityValue: number) => {
@@ -20,16 +23,18 @@ export const CartList = ({ isEdit = false }: Props) => {
         removeCartProduct(product)
     }
 
+    const productsToShow = products ? products : cart
+
     return (
         <>
-            {cart.map((product) => (
+            {productsToShow.map((product) => (
                 <Grid key={product.slug + product.size} container spacing={2} sx={{ mb: 1 }}>
                     <Grid item xs={3}>
                         {/* // todo: llevar a la pagina del producto */}
                         <Link href={`/product/${product.slug}`} passHref>
                             <CardActionArea>
                                 <CardMedia
-                                    image={`/products/${product.images}`}
+                                    image={`/products/${product.images ?? product.image}`}
                                     component='img'
                                     sx={{ borderRadius: '5px' }}
                                 />
@@ -44,12 +49,11 @@ export const CartList = ({ isEdit = false }: Props) => {
                             {isEdit ?
                                 <ItemCounter
                                     currentValue={product.quantity}
-                                    maxValue={product.inStock}
-                                    onSelectCount={(newValue) => onNewCartQuantityValue(product, newValue)}
-
+                                    maxValue={10}
+                                    onSelectCount={(newValue) => onNewCartQuantityValue(product as ICartProduct, newValue)}
                                 />
                                 :
-                                <Typography variant="h6">3 items</Typography>
+                                <Typography variant="h6">{product.quantity} {product.quantity === 1 ? 'item' : "items"}</Typography>
                             }
                         </Box>
 
@@ -58,7 +62,7 @@ export const CartList = ({ isEdit = false }: Props) => {
                         <Typography variant="subtitle1">{`$${product.price}`}</Typography>
                         {isEdit &&
                             <Button
-                                onClick={() => onRemoveCartProduct(product)}
+                                onClick={() => onRemoveCartProduct(product as ICartProduct)}
                                 variant="text"
                                 color="secondary"
                             >

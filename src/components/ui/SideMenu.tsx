@@ -9,9 +9,9 @@ import { AccountCircleOutlined, AdminPanelSettings, CategoryOutlined, Confirmati
 // si estamos autenticados y tenemos el role admin accedemos a admin panel 
 
 export const SideMenu = () => {
-    const { push , reload , asPath } = useRouter()
+    const { push, asPath } = useRouter()
     const { isMenuOpen, toggleSideMenu } = useContext(UiContext)
-    const { isLoggedIn, user , logout } = useContext(AuthContext)
+    const { isLoggedIn, user, logout } = useContext(AuthContext)
 
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -25,9 +25,8 @@ export const SideMenu = () => {
         toggleSideMenu()
     }
 
-    const onLogout = () =>{
-         logout()
-         reload()
+    const onLogout = () => {
+        logout()
     }
     // const validateIsLoggedIn = isLoggedIn
 
@@ -69,46 +68,46 @@ export const SideMenu = () => {
                         </ListItem>
                     }
                     {isLoggedIn &&
-                        <ListItem button>
+                        <ListItem button onClick={() => navigateTo('/orders/history')}>
                             <ListItemIcon>
                                 <ConfirmationNumberOutlined />
                             </ListItemIcon>
                             <ListItemText primary={'Mis Ordenes'} />
                         </ListItem>
                     }
-                    <ListItem button sx={{ display: { xs: '', sm: 'none' } }}>
+                    <ListItem button onClick={() => navigateTo('/category/men')} sx={{ display: { xs: '', sm: 'none' } }}>
                         <ListItemIcon>
                             <MaleOutlined />
                         </ListItemIcon>
-                        <ListItemText onClick={() => navigateTo('/category/men')} primary={'Hombres'} />
+                        <ListItemText primary={'Hombres'} />
                     </ListItem>
 
-                    <ListItem button sx={{ display: { xs: '', sm: 'none' } }}>
+                    <ListItem button onClick={() => navigateTo('/category/women')} sx={{ display: { xs: '', sm: 'none' } }}>
                         <ListItemIcon>
                             <FemaleOutlined />
                         </ListItemIcon>
-                        <ListItemText onClick={() => navigateTo('/category/women')} primary={'Mujeres'} />
+                        <ListItemText primary={'Mujeres'} />
                     </ListItem>
 
-                    <ListItem button sx={{ display: { xs: '', sm: 'none' } }}>
+                    <ListItem button onClick={() => navigateTo('/category/kid')} sx={{ display: { xs: '', sm: 'none' } }}>
                         <ListItemIcon>
                             <EscalatorWarningOutlined />
                         </ListItemIcon>
-                        <ListItemText onClick={() => navigateTo('/category/kid')} primary={'Niños'} />
+                        <ListItemText primary={'Niños'} />
                     </ListItem>
                     {!isLoggedIn ?
-                        <ListItem button onClick={()=> navigateTo(`/auth/login?p=${asPath}`)}>
+                        <ListItem button onClick={() => navigateTo(`/auth/login?p=${asPath}`)}>
                             <ListItemIcon>
                                 <VpnKeyOutlined />
                             </ListItemIcon>
                             <ListItemText primary={'Ingresar'} />
                         </ListItem>
                         :
-                        <ListItem button>
+                        <ListItem button onClick={onLogout}>
                             <ListItemIcon>
                                 <LoginOutlined />
                             </ListItemIcon>
-                            <ListItemText onClick={onLogout} primary={'Salir'} />
+                            <ListItemText primary={'Salir'} />
                         </ListItem>
                     }
                     {/* Admin */}

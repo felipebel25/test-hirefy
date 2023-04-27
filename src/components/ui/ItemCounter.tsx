@@ -21,7 +21,6 @@ export const ItemCounter = ({
         <Box display='flex' alignItems='center' >
             <IconButton
                 onClick={onDecrement}
-
             >
                 <RemoveCircleOutline />
             </IconButton>

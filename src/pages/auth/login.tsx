@@ -1,5 +1,7 @@
-import { useContext, useState } from "react";
-import { Box, Button, Chip, Grid, TextField, Typography } from "@mui/material"
+import { useContext, useEffect, useState } from "react";
+import { GetServerSideProps } from 'next'
+
+import { Box, Button, Chip, Divider, Grid, TextField, Typography } from "@mui/material"
 import NextLink from "next/link"
 import { useForm } from "react-hook-form";
 import { tesloApi } from "services";
@@ -9,6 +11,7 @@ import { AuthLayout } from "@/components/layouts"
 import { ErrorOutline } from "@mui/icons-material";
 import { AuthContext } from "context";
 import { useRouter } from "next/router";
+import { getProviders, getSession, signIn } from "next-auth/react";
 type FormData = {
     email: string;
     password: string;
@@ -21,19 +24,31 @@ const LoginPage = () => {
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm<FormData>();
     const [isError, setIsError] = useState(false);
-    const destinationToGoRegister = `?p=${router.query.p?.toString()}` || '?p=/'
 
+    const [providers, setProviders] = useState<any>({});
+
+    useEffect(() => {
+        getProviders()
+            .then(providers => {
+                setProviders(providers);
+            })
+    }, [])
+
+
+    const destinationToGoRegister = `?p=${router.query.p?.toString()}` || '?p=/'
     const onLogin = async ({ email, password }: FormData) => {
         setIsError(false);
-        
-        const destination = router.query.p?.toString() || '/'
 
-        const isValidLogin = await loginUser(email, password)
-        if (!isValidLogin) {
-            setIsError(true)
-            return
-        }
-        router.replace(destination)
+        // const destination = router.query.p?.toString() || '/'
+
+        // const isValidLogin = await loginUser(email, password)
+        // if (!isValidLogin) {
+        //     setIsError(true)
+        //     return
+        // }
+        // router.replace(destination)
+        await signIn('credentials', { email: email, password: password })
+
     }
 
     return (
@@ -102,11 +117,56 @@ const LoginPage = () => {
                                 No tienes Cuenta?
                             </NextLink>
                         </Grid>
+                        <Grid item xs={12} display={'flex'} flexDirection={'column'} justifyContent={'flex-end'}>
+                            <Divider sx={{ width: "100%", mb: 2 }} />
+                            {Object.values(providers).map((provider: any) => {
+
+                                if (provider.id === 'credentials') return (<div key={provider.id} ></div>)
+
+                                return (
+                                    <Button
+                                        key={provider.id}
+                                        variant="outlined"
+                                        fullWidth
+                                        color="primary"
+                                        sx={{ mb: 1 }}
+                                        onClick={() => signIn(provider.id)}
+                                    >
+                                        {provider.name}
+                                    </Button>
+                                )
+                            })}
+                        </Grid>
                     </Grid>
                 </Box>
             </form>
         </AuthLayout>
     )
 }
+
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time
+
+export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+
+    const session = await getSession({ req })
+
+    const { p = '/' } = query
+
+    if (session) {
+        return {
+            redirect: {
+                destination: p.toString(),
+                permanent: false
+            }
+        }
+    }
+
+
+    return {
+        props: {}
+    }
+}
+
 
 export default LoginPage
