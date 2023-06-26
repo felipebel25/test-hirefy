@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 
 import { IUser } from '@/interfaces/users';
-import { tesloApi } from 'services';
+import { tesloApi } from 'axiosApi';
 import { AuthContext, AuthReducer } from './index';
 export interface AuthState {
     isLoggedIn: boolean;

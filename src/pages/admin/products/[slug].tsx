@@ -9,7 +9,7 @@ import { AdminLayout } from '../../../components/layouts'
 import { IProduct, ISize, IType } from '../../../interfaces';
 
 import { DriveFileRenameOutline, SaveOutlined, UploadOutlined } from '@mui/icons-material';
-import { tesloApi } from 'services';
+import { tesloApi } from 'axiosApi';
 import { Product } from 'models';
 import { useRouter } from 'next/router';
 

@@ -6,7 +6,7 @@ import { Chip, Grid, MenuItem, Select, Typography } from "@mui/material"
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from "@mui/x-data-grid"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { tesloApi } from "services"
+import { tesloApi } from "axiosApi"
 import useSWR from 'swr'
 const UsersPage = () => {
     const { data, error, isLoading } = useSWR<IUser[]>('/api/admin/users')

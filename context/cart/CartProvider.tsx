@@ -7,7 +7,7 @@ import { ICartProduct } from '@/interfaces/cart';
 import { getAddressFromCookies } from 'utils/cookies';
 import { isEmptyObject } from 'utils/globalFunctions';
 import { IOrder, ShippingAddress } from '@/interfaces/order';
-import { tesloApi } from 'services';
+import { tesloApi } from 'axiosApi';
 
 export interface CartState {
     isLoaded: boolean,

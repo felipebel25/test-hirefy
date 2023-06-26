@@ -10,7 +10,7 @@ import { getSession } from 'next-auth/react'
 import { dbOrders } from 'database'
 import { IOrder } from '@/interfaces'
 import { PayPalButtons } from '@paypal/react-paypal-js'
-import { tesloApi } from 'services'
+import { tesloApi } from 'axiosApi'
 
 export type OrderResponseBody = {
     id: string;

@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next'
 import { Box, Button, Chip, Divider, Grid, TextField, Typography } from "@mui/material"
 import NextLink from "next/link"
 import { useForm } from "react-hook-form";
-import { tesloApi } from "services";
+import { tesloApi } from "axiosApi";
 import { isEmail } from "utils";
 
 import { AuthLayout } from "@/components/layouts"
