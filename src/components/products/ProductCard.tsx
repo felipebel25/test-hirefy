@@ -13,15 +13,15 @@ export const ProductCard = ({ product }: Props) => {
 
     const productImage = useMemo(() => {
         return isHovered
-            ? `/products/${product.images[1]}`
-            : `/products/${product.images[0]}`;
+            ? `${product.images[1]}`
+            : `${product.images[0]}`;
 
     }, [isHovered, product.images])
 
     return (
         <Grid
             item
-            xs={6}
+            xs={5}
             sm={4}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
@@ -36,6 +36,7 @@ export const ProductCard = ({ product }: Props) => {
                                     color="primary"
                                     label='No hay disponible'
                                     sx={{ position: "absolute", zIndex: 99, top: "10px", left: "10px" }}
+
                                 />
                             )}
                             <CardMedia
@@ -52,7 +53,6 @@ export const ProductCard = ({ product }: Props) => {
             <Box sx={{ mt: 1, display: isImageLoaded ? 'block' : 'none' }} className='fadeIn'>
                 <Typography fontWeight={700}>{product.title}</Typography>
                 <Typography fontWeight={500}>{`$${product.price}`}</Typography>
-
             </Box>
         </Grid>
     )

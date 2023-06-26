@@ -28,49 +28,12 @@ interface Props {
 
 const OrderPage: NextPage<Props> = ({ order }) => {
     const { shippingAddress } = order;
-    const router = useRouter()
-    const [isPaying, setIsPaying] = useState(false)
 
-    const onOrderCompleted = async (details: OrderResponseBody) => {
 
-        if (details.status !== 'COMPLETED') {
-            alert('No hay pago en Paypal')
-        }
-        setIsPaying(true)
-        try {
-            const { data } = await tesloApi.post(`/orders/pay`, {
-                transactionId: details.id,
-                orderId: order._id
-            });
-            router.reload()
-
-        } catch (error) {
-            console.log(error);
-            setIsPaying(false)
-            alert('Error: ' + error)
-        }
-    }
 
     return (
         <ShopLayout title='Resumen de la orden' pageDescription="Resumen de la orden">
-            <Typography variant="h1" component='h1'>Orden: {order._id}</Typography>
-            {order.isPaid ? (
-                <Chip
-                    sx={{ my: 2 }}
-                    label='Orden ya fue Pagada'
-                    variant="outlined"
-                    color='success'
-                    icon={<CreditScoreOutlined />}
-                />
-            ) : (
-                <Chip
-                    sx={{ my: 2 }}
-                    label='Pendiente de pago'
-                    variant="outlined"
-                    color='error'
-                    icon={<CreditCardOffOutlined />}
-                />
-            )}
+            <Typography variant="h1" component='h1' mb={4}>Orden: {order._id}</Typography>
             <Grid container className='fadeIn'>
                 <Grid item xs={12} sm={7}>
                     <CartList products={order.orderItems} />
@@ -97,47 +60,26 @@ const OrderPage: NextPage<Props> = ({ order }) => {
                             }}
                             />
                             <Box sx={{ mt: 2 }} display={'flex'} flexDirection='column'>
-                                {/* todo */}
-                                <Box
-                                    display='flex'
-                                    justifyContent='center'
-                                    className='fadeIn'
-                                    sx={{ display: isPaying ? 'flex' : 'none' }}
-                                >
-                                    <CircularProgress />
-                                </Box>
                                 <Box
                                     flexDirection='column'
-                                    sx={{ display: isPaying ? 'none' : 'flex' , flex: 1 }}
+                                    sx={{ display: 'flex' }}
                                 >
                                     {order.isPaid ? (
                                         <Chip
-                                            sx={{ my: 2 }}
+                                            sx={{ my: 2, flex: 1 }}
                                             label='Orden ya fue Pagada'
                                             variant="outlined"
                                             color='success'
                                             icon={<CreditScoreOutlined />}
                                         />
                                     ) : (
-                                        <PayPalButtons
-                                            createOrder={(data, actions) => {
-                                                return actions.order.create({
-                                                    purchase_units: [
-                                                        {
-                                                            amount: {
-                                                                value: `${order.total}`,
-                                                            },
-                                                        },
-                                                    ],
-                                                });
-                                            }}
-                                            onApprove={(data, actions) => {
-                                                return actions.order!.capture().then((details: any) => {
-                                                    onOrderCompleted(details);
-                                                });
-                                            }}
+                                        <Chip
+                                            sx={{ my: 2 }}
+                                            label='Pendiente de pago'
+                                            variant="outlined"
+                                            color='error'
+                                            icon={<CreditCardOffOutlined />}
                                         />
-
                                     )}
                                 </Box>
                             </Box>
@@ -175,20 +117,18 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
     if (!order) {
         return {
             redirect: {
-                destination: `/orders/history`,
+                destination: `/admin/orders`,
                 permanent: false,
             }
         }
     }
-    // si el usuario que hizo la orden no es igual al usuario actual de la seccion
-    if (order.user !== session.user._id) {
-        return {
-            redirect: {
-                destination: `/orders/history`,
-                permanent: false,
-            }
-        }
-    }
+    order.orderItems = order.orderItems.map(product => {
+        product.image = product.image.includes('http')
+            ? product.image
+            : `${process.env.NEXTAUTH_URL}/products/${product.image}`;
+        return product;
+    });
+
 
     return {
         props: {

@@ -1,4 +1,5 @@
 import { Navbar, SideMenu } from "@/components/ui";
+import { Box } from "@mui/material";
 import Head from "next/head"
 import { PropsWithChildren } from "react";
 
@@ -16,28 +17,25 @@ export const ShopLayout = ({ children, title, pageDescription, imageFullUrl }: P
                 <meta name="description" content={pageDescription} />
                 <meta name="og:title" content={title} />
                 <meta name="og:description" content={pageDescription} />
-                {imageFullUrl && (
-                    <meta name='og:image' content={imageFullUrl} />
-                )
-
-                }
-
+                {imageFullUrl && (<meta name='og:image' content={imageFullUrl} />)}
             </Head>
             <nav>
                 <Navbar />
             </nav>
             <SideMenu />
-            <main
-                style={{
+            <Box
+                component={'main'}
+                sx={{
                     margin: "80px auto",
+                    width:"100% !important",
                     maxWidth: "1440px",
-                    padding: "0px 30px"
+
                 }}
             >
                 {children}
-            </main>
+            </Box>
             <footer>
-
+                Coding by Felipe Medina 
             </footer>
         </>
     )

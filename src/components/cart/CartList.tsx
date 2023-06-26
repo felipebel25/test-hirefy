@@ -14,7 +14,7 @@ interface Props {
 
 export const CartList = ({ isEdit = false, products }: Props) => {
     const { cart, updateCartQuantity, removeCartProduct } = useContext(CartContext);
-
+    
     const onNewCartQuantityValue = (product: ICartProduct, newQuantityValue: number) => {
         product.quantity = newQuantityValue;
         updateCartQuantity(product)
@@ -34,7 +34,7 @@ export const CartList = ({ isEdit = false, products }: Props) => {
                         <Link href={`/product/${product.slug}`} passHref>
                             <CardActionArea>
                                 <CardMedia
-                                    image={`/products/${product.images ?? product.image}`}
+                                    image={product.images ?? product.image}
                                     component='img'
                                     sx={{ borderRadius: '5px' }}
                                 />

@@ -1,7 +1,6 @@
 import { IProduct } from '@/interfaces'
 import { db } from 'database'
 import { Product } from 'models'
-import mongoose from 'mongoose'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Data =
@@ -31,6 +30,7 @@ const getProduct = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         return res.status(400).json({ message: "No existe este product " + slug })
     }
     await db.disconnect();
+    product.images = product.images.map((image) => image.includes('http') ? image : `${process.env.HOST_NAME}products/${image}`)
 
     return res.status(200).json(product)
 

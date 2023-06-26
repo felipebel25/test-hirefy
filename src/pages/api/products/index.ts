@@ -17,7 +17,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
                 message: "Bad request"
             })
     }
-    res.status(200).json({ message: 'Example' })
 }
 
 
@@ -34,7 +33,13 @@ const getProducts = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const products = await Product.find(condition).select('title images price inStock slug -_id').lean()
 
     await db.disconnect()
+   
+    const updatedProducts = products.map(product => {
+        product.images = product.images.map((image) => image.includes('http') ? image : `${process.env.HOST_NAME}products/${image}`)
+        return product
+    })
 
-    return res.status(200).json(products)
+
+    return res.status(200).json(updatedProducts)
 
 }

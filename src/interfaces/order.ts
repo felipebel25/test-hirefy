@@ -16,6 +16,10 @@ export interface IOrder {
     isPaid: boolean;
 
     paidAt?:string;
+    transactionId?: string;
+    createdAt?: string;
+    updatedAt?: string;
+
 }
 
 export interface IOrderItem {
@@ -25,7 +29,7 @@ export interface IOrderItem {
     quantity: number;
     slug: string;
     image: string;
-    images: string;
+    images?: string;
 
     price: number;
     gender: string;

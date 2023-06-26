@@ -30,7 +30,6 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse) => {
     const { orderItems, total, } = req.body as IOrder;
     // verfied user
     const session: any = await getServerSession(req, res, authOptions);
-    console.log(req.body);
 
 
     if (!session) {
@@ -58,8 +57,6 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse) => {
         const taxRate = Number(process.env.NEXT_PUBLIC_TAX_RATE || 0)
 
         const backendTotal = subTotal * (taxRate + 1);
-        
-
 
         if (total !== backendTotal) {
             throw new Error('Total must be equal to backendTotal')
@@ -80,13 +77,6 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(400).json({ message: error.message || 'revise logs del server' });
 
     }
-
-
-
-
-
-
-
 
     res.status(201).json(req.body)
 

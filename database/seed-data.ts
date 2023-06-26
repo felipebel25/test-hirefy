@@ -25,17 +25,11 @@ interface SeedUser {
 }
 
 
-interface SeedPalondromo {
-    name: string;
-    isPalondromo: boolean;
-}
-
 
 
 interface SeedData {
     products: SeedProduct[],
     users: SeedUser[],
-    palondromo: SeedPalondromo[],
 }
 
 
@@ -838,10 +832,5 @@ export const initialData: SeedData = {
             role: "client"
         },
     ],
-    palondromo: [
-        {
-            name: "HOLA",
-            isPalondromo: false
-        }
-    ]
+  
 }

@@ -12,13 +12,12 @@ export const ProductSlideShow = ({ images }: Props) => {
             indicators
         >
             {images.map((image) => {
-                const url = `/products/${image}`
                 return (
                     <div className={styles['each-slide']} key={image}>
                         <div
                             // todo: crear un responsive para esta parta si esta en desktop que use contain si no cover
                             style={{
-                                backgroundImage: `url(${url})`,
+                                backgroundImage: `url(${image})`,
                                 backgroundSize: "cover",
                                 backgroundRepeat: "no-repeat"
                             }}

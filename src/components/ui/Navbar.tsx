@@ -1,9 +1,10 @@
 import { useContext, useState } from "react"
+import { useRouter } from "next/router"
+import NextLink from "next/link"
+
 import { ClearOutlined, SearchOutlined, ShoppingCart } from "@mui/icons-material"
 import { AppBar, Badge, Box, Button, IconButton, Input, InputAdornment, Link, Toolbar, Typography } from "@mui/material"
 import { CartContext, UiContext } from "context"
-import NextLink from "next/link"
-import { useRouter } from "next/router"
 
 export const Navbar = () => {
 

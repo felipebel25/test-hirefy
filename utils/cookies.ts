@@ -1,7 +1,18 @@
-import { shippingAddress } from "context/cart/CartProvider"
 import Cookies from "js-cookie"
 
-export const getAddressFromCookies = (): shippingAddress => {
+type FormData = {
+    firstName: string;
+    lastName : string;
+    address  : string;
+    address2?: string;
+    zip      : string;
+    city     : string;
+    country  : string;
+    phone    : string;
+}
+
+
+export const getAddressFromCookies = (): FormData => {
     return {
         firstName: Cookies.get('firstName') || "",
         lastName: Cookies.get('lastName') || "",

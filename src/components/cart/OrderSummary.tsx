@@ -19,7 +19,7 @@ export const OrderSummary = ({ orderValues }: Props) => {
                 <Typography>No. products</Typography>
             </Grid>
             <Grid item xs={6} display={'flex'} justifyContent={'flex-end'} >
-                <Typography>{summaryValues.numberOfItems} {summaryValues.numberOfItems > 1 ? `productos` : 'prodict'} </Typography>
+                <Typography>{summaryValues.numberOfItems} {summaryValues.numberOfItems > 1 ? `productos` : 'producto'} </Typography>
             </Grid>
             <Grid item xs={6}  >
                 <Typography>SubTotal</Typography>

@@ -2,8 +2,8 @@ import { ISize, IType } from "@/interfaces";
 
 export interface ICartProduct {
     _id: string;
-    images: string;
-    image: string;
+    images?: string;
+    image?: string;
 
     inStock: number;
     price: number;
