@@ -1,5 +1,6 @@
 import { useContext, useState } from "react"
 import { GetStaticProps, GetStaticPropsContext } from "next"
+import { useRouter } from "next/router"
 
 import { ShopLayout } from "@/components/layouts"
 import { ProductSlideShow, SizeSelector } from "@/components/products"
@@ -8,7 +9,6 @@ import { IProduct, ICartProduct, ISize } from "@/interfaces"
 import { Box, Button, Chip, Grid, Typography } from "@mui/material"
 import { getAllProductSlugs, getProductBySlug } from "database/dbProducts"
 import { CartContext } from "../../../context/cart/CartContext"
-import { useRouter } from "next/router"
 
 
 interface Props {
@@ -32,6 +32,7 @@ const ProductPage = ({ product }: Props) => {
     quantity: 1,
   })
 
+
   const onSizeSelector = (size: ISize) => setTempCartProduct(s => ({ ...s, size }))
   const onSelectCount = (quantity: number) => setTempCartProduct(s => ({ ...s, quantity }))
 
@@ -41,7 +42,11 @@ const ProductPage = ({ product }: Props) => {
   }
 
   return (
-    <ShopLayout title={product.title} pageDescription={product.description}>
+    <ShopLayout
+      imageFullUrl={product.images[0]}
+      title={product.title}
+      pageDescription={product.description}
+    >
       <Grid container spacing={3}>
         <Grid item xs={12} sm={7}>
           <ProductSlideShow

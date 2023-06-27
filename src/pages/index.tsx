@@ -11,7 +11,11 @@ export default function Home() {
 
   return (
     <>
-      <ShopLayout title={"Teslita - Home"} pageDescription={"Encuentra los mejores productos de teslita aqui"} >
+      <ShopLayout
+        imageFullUrl="https://i.ibb.co/Vt9V1rH/Captura-desde-2023-06-27-00-08-09.png"
+        title={"Teslita - Home"}
+        pageDescription={"Encuentra los mejores productos de teslita aqui"}
+      >
         <Typography variant="h1" component='h1' sx={{ mb: 1 }}>Tienda</Typography>
         <Typography variant="h5" component='h5' sx={{ mb: 5 }}>Todos los productos</Typography>
 
