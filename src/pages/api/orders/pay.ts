@@ -51,7 +51,6 @@ const payOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     // todo: validar seccion del usuario
     const paypalBearerToken = await getPayPalBearerToken()
-    console.log(paypalBearerToken);
 
     if (!paypalBearerToken) {
         return res.status(400).json({ message: 'no se pudo obtener el token de paypal' })

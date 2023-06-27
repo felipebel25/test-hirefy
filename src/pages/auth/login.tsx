@@ -1,17 +1,16 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { GetServerSideProps } from 'next'
+import NextLink from "next/link"
+import { useRouter } from "next/router";
+import { getProviders, getSession, signIn } from "next-auth/react";
+import { useForm } from "react-hook-form";
 
 import { Box, Button, Chip, Divider, Grid, TextField, Typography } from "@mui/material"
-import NextLink from "next/link"
-import { useForm } from "react-hook-form";
-import { tesloApi } from "axiosApi";
+import { ErrorOutline, GitHub } from "@mui/icons-material";
 import { isEmail } from "utils";
 
 import { AuthLayout } from "@/components/layouts"
-import { ErrorOutline } from "@mui/icons-material";
-import { AuthContext } from "context";
-import { useRouter } from "next/router";
-import { getProviders, getSession, signIn } from "next-auth/react";
+
 type FormData = {
     email: string;
     password: string;
@@ -20,7 +19,6 @@ type FormData = {
 const LoginPage = () => {
 
     const router = useRouter()
-    const { loginUser } = useContext(AuthContext)
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm<FormData>();
     const [isError, setIsError] = useState(false);
@@ -52,12 +50,12 @@ const LoginPage = () => {
     }
 
     return (
-        <AuthLayout title={"Ingresar"} >
+        <AuthLayout title={"Login | Teslita"} >
             <form onSubmit={handleSubmit(onLogin)}>
                 <Box sx={{ width: 350, padding: "10px 20px" }}>
                     <Grid container>
                         <Grid item xs={12}>
-                            <Typography variant="h1" component='h1'>Iniciar Sesion</Typography>
+                            <Typography variant="h1" component='h1'>Iniciar Sesión | Teslita</Typography>
                             {isError &&
                                 <Chip
                                     label='No reconocemos ese usuario / password'
@@ -91,7 +89,7 @@ const LoginPage = () => {
                                 fullWidth
                                 variant="outlined"
                                 type='password'
-                                label='Contrasena'
+                                label='Contraseña'
                                 {...register('password', {
                                     required: 'Este campo es requerido',
                                     minLength: { value: 6, message: 'Minimo 6 caracteres' }
@@ -101,7 +99,6 @@ const LoginPage = () => {
                             />
                         </Grid>
                         <Grid
-                            mb={4}
                             item xs={12}>
                             <Button
                                 type="submit"
@@ -112,17 +109,30 @@ const LoginPage = () => {
                                 Ingresar
                             </Button>
                         </Grid>
-                        <Grid item xs={12} display={'flex'} justifyContent={'flex-end'}>
-                            <NextLink href={`/auth/register${destinationToGoRegister}`} >
-                                No tienes Cuenta?
-                            </NextLink>
+                        <Grid item xs={12} sx={{ mt: '1.5rem', mb: "1rem" }} display={'flex'} justifyContent={'flex-end'}>
+                            <Button color="primary" href={`/auth/register${destinationToGoRegister}`}>
+                                No tienes una Cuenta?
+                            </Button>
                         </Grid>
                         <Grid item xs={12} display={'flex'} flexDirection={'column'} justifyContent={'flex-end'}>
                             <Divider sx={{ width: "100%", mb: 2 }} />
                             {Object.values(providers).map((provider: any) => {
-
                                 if (provider.id === 'credentials') return (<div key={provider.id} ></div>)
+                                if (provider.id === 'github') return (
+                                    <Button
 
+                                        key={provider.id}
+                                        variant="outlined"
+                                        fullWidth
+                                        color="primary"
+                                        sx={{ mb: 1, cursor: "pointer" }}
+                                        onClick={() => signIn(provider.id)}
+                                        startIcon={<GitHub />}
+
+                                    >
+                                        Login with {provider.name}
+                                    </Button>
+                                )
                                 return (
                                     <Button
                                         key={provider.id}
@@ -170,3 +180,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
 
 
 export default LoginPage
+

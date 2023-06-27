@@ -29,20 +29,17 @@ export const Navbar = () => {
                     </Link>
                 </NextLink>
                 <Box flex={1} />
-                <Box
-                    className='fadeIn'
-                    sx={{ display: isSearch ? 'none' : { xs: 'none', sm: "block" } }}
-                >
+                <Box className='fadeIn' sx={{ display: isSearch ? 'none' : { xs: 'none', sm: "block" } }}>
                     <NextLink href='/category/men' passHref legacyBehavior>
                         <Link>
-                            <Button color={`${asPath.includes('/men') ? 'primary' : "info"}`} >
+                            <Button sx={{ m: "0.5rem" }} color={`${asPath.includes('/men') ? 'primary' : "info"}`} >
                                 Hombres
                             </Button>
                         </Link>
                     </NextLink>
                     <NextLink href='/category/women' passHref legacyBehavior>
                         <Link>
-                            <Button color={`${asPath.includes('/women') ? 'primary' : "info"}`} >
+                            <Button sx={{ m: "0.5rem" }} color={`${asPath.includes('/women') ? 'primary' : "info"}`} >
 
                                 Mujeres
                             </Button>
@@ -50,7 +47,7 @@ export const Navbar = () => {
                     </NextLink>
                     <NextLink href='/category/kid' passHref legacyBehavior>
                         <Link>
-                            <Button color={`${asPath.includes('/kid') ? 'primary' : "info"}`} >
+                            <Button sx={{ m: "0.5rem" }} color={`${asPath.includes('/kid') ? 'primary' : "info"}`} >
                                 Kids
                             </Button>
                         </Link>
@@ -58,8 +55,6 @@ export const Navbar = () => {
                 </Box>
                 <Box flex={1} />
                 {/* screens bigs */}
-
-
                 {isSearch ? (
                     <Input
                         className="fadeIn"
@@ -70,7 +65,6 @@ export const Navbar = () => {
                         placeholder="Buscar..."
                         onKeyPress={(e) => e.key === "Enter" ? onSearchTerm() : ""}
                         sx={{ display: { xs: 'none', sm: "flex" } }}
-
                         endAdornment={
                             <InputAdornment position="end">
                                 <IconButton
@@ -98,7 +92,6 @@ export const Navbar = () => {
                 >
                     <SearchOutlined />
                 </IconButton>
-
                 <NextLink href='/cart' passHref legacyBehavior>
                     <Link>
                         <IconButton>

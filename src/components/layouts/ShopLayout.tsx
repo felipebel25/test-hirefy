@@ -29,14 +29,10 @@ export const ShopLayout = ({ children, title, pageDescription, imageFullUrl }: P
                     margin: "80px auto",
                     width:"100% !important",
                     maxWidth: "1440px",
-
                 }}
             >
                 {children}
             </Box>
-            <footer>
-                Coding by Felipe Medina 
-            </footer>
         </>
     )
 }

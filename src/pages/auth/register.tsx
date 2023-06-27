@@ -47,7 +47,7 @@ const RegisterPage = () => {
 
     }
     return (
-        <AuthLayout title={"Ingresar"} >
+        <AuthLayout title={"Registrarse | Teslita"} >
             <form onSubmit={handleSubmit(onRegisterForm)}>
                 <Box sx={{ width: 350, padding: "10px 20px" }}>
                     <Grid container>
@@ -103,11 +103,11 @@ const RegisterPage = () => {
                                 fullWidth
                                 variant="outlined"
                                 type='password'
-                                label='Contrasena'
+                                label='Contraseña'
                                 InputLabelProps={{
                                     shrink: true
                                 }}
-                                placeholder="Contrasena"
+                                placeholder="Contraseña"
                                 {...register('password', {
                                     required: 'Este campo es requerido',
                                     minLength: { value: 6, message: 'Min 6 characters' }
@@ -122,9 +122,9 @@ const RegisterPage = () => {
                             </Button>
                         </Grid>
                         <Grid item xs={12} display={'flex'} justifyContent={'flex-end'}>
-                            <Link href={`/auth/login?p=${router.query.p?.toString() || '?p=/'}`} passHref>
+                            <Button color="primary" href={`/auth/login?p=${router.query.p?.toString() || '?p=/'}`} >
                                 Ya tienes Cuenta?
-                            </Link>
+                            </Button>
                         </Grid>
                     </Grid>
                 </Box>

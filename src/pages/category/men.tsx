@@ -13,9 +13,11 @@ export default function WomenProductsPage() {
         <>
             <ShopLayout title={"Teslita - Men Section"} pageDescription={"Encuentra los mejores productos de teslita para hombres,chicos aqui"} >
                 <Typography variant="h1" component='h1' sx={{ mb: 1 }}>Tienda</Typography>
-                <Typography variant="h5" component='h5' sx={{ mb: 7 }}>Todos los productos</Typography>
-
-                <Grid container spacing={4}>
+                <Typography variant="h5" component='h5' sx={{ mb: 5 }}>Todos los productos</Typography>
+                <Grid sx={{
+                    width: '100%',
+                    margin: "0 auto"
+                }} container spacing={4}>
                     {isLoading
                         ?
                         <FullScreenLoading />
