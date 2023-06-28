@@ -13,7 +13,6 @@ interface Props extends PropsWithChildren {
 
 export const AdminLayout = ({ children, title, subtitle, icon }: Props) => {
 
-
     return (
         <>
             <Head>
